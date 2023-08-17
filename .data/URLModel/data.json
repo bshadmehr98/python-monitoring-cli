@@ -1,0 +1,16 @@
+[
+  {
+    "id": "eb789030-96ad-472c-bfc2-5f93493065ad",
+    "address": "http://localhost",
+    "port": 8008,
+    "protocol": "http",
+    "interval": 30
+  },
+  {
+    "id": "29f316a3-b407-4941-ac11-dbb625310b3e",
+    "address": "localhost",
+    "port": 21,
+    "protocol": "ftp",
+    "interval": 45
+  }
+]
