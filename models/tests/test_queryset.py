@@ -98,8 +98,8 @@ def test_queryset_load_related():
 
     # Create related instances data
     related_data = [
-        {"role": "Admin", "id": 1},
-        {"role": "User", "id": 2},
+        {"role": "Admin", "id": "1"},
+        {"role": "User", "id": "2"},
     ]
 
     # Create a new queryset for the related instances
