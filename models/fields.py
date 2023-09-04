@@ -1,7 +1,6 @@
 class Field:
-    def __init__(self, value=None, default=None):
+    def __init__(self, default=None):
         self.default = default
-        self.value = value
 
     def get_default(self):
         return self.default
@@ -21,6 +20,6 @@ class StringField(Field):
 
 
 class RelatedField(StringField):
-    def __init__(self, model=None, default=None):
-        self.default = default
+    def __init__(self, default=None, model=None):
         self.model = model
+        super(RelatedField, self).__init__(default=default)

@@ -2,13 +2,10 @@ import os
 import json
 
 from models.meta import ModelMeta
-from models.fields import Field, StringField, IntegerField
 from models.queryset import QuerySet
 
 
 class Model(metaclass=ModelMeta):
-    _instances = []
-
     def __init__(self, **kwargs):
         for field_name, field_value in kwargs.items():
             if field_name in self._fields and self._fields[field_name].validate(
@@ -27,7 +24,8 @@ class Model(metaclass=ModelMeta):
             # directory already exists
             pass
         if not os.path.exists(f"./.data/{cls.__name__}/data.json"):
-            with open(f"./.data/{cls.__name__}/data.json", 'w'): pass
+            with open(f"./.data/{cls.__name__}/data.json", "w"):
+                pass
         return f"./.data/{cls.__name__}/data.json"
 
     @classmethod

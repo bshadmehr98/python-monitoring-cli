@@ -12,5 +12,12 @@
     "port": 21,
     "protocol": "ftp",
     "interval": 45
+  },
+  {
+    "id": "bb436abc-d3e5-458f-a20c-ef61618beb77",
+    "address": "https://google.com",
+    "port": 443,
+    "protocol": "https",
+    "interval": 120
   }
 ]

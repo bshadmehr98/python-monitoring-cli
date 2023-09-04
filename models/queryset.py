@@ -4,6 +4,7 @@ from models.fields import RelatedField
 class QuerySet:
     def __init__(self, model_cls, data):
         self.model_cls = model_cls
+        self._data = data
         self._instances = [model_cls(**item) for item in data]
 
     def filter(self, **kwargs):
@@ -12,6 +13,7 @@ class QuerySet:
             for instance in self._instances
             if all(getattr(instance, key) == value for key, value in kwargs.items())
         ]
+
         return QuerySet(
             self.model_cls, [instance.__dict__ for instance in filtered_instances]
         )
@@ -24,6 +26,14 @@ class QuerySet:
             self.load_related()
         return self._instances
 
+    def get(self, **kwargs):
+        res = self.filter(**kwargs).all()
+        if len(res) > 1:
+            raise Exception("More than 1 record found")
+        elif len(res) == 0:
+            raise Exception("No record found")
+        return res[0]
+
     def load_related(self):
         for i in self._instances:
             for field_name, field_value in i._fields.items():
@@ -33,11 +43,3 @@ class QuerySet:
                         f"{field_name}_obj",
                         field_value.model.all().get(id=getattr(i, field_name)),
                     )
-
-    def get(self, **kwargs):
-        res = self.filter(**kwargs).all()
-        if len(res) > 1:
-            raise Exception("More than 1 record found")
-        if len(res) == 0:
-            raise Exception("No record found")
-        return res[0]

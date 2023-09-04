@@ -17,4 +17,3 @@ cli.add_command(alerts_group)
 cli.add_command(channels_group)
 cli.add_command(monitor_group)
 cli.add_command(history_group)
-

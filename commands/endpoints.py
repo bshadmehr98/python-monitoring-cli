@@ -75,4 +75,3 @@ def delete(endpoint_id):
     u = URLModel.all().get(id=endpoint_id)
     click.echo(f"Deleting endpoint: {u}")
     u.delete()
-

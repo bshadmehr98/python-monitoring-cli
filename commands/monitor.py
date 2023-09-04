@@ -26,4 +26,3 @@ def start():
 
     # Run the monitoring process asynchronously
     asyncio.run(run_monitoring(urls))
-
