@@ -24,6 +24,18 @@ class SampleModel(metaclass=ModelMeta):
     role = RelatedField(model=SampleRelatedModel)
 
 
+def test_queryset_init():
+    data = [
+        {"name": "Alice", "age": 25},
+        {"name": "Bob", "age": 30},
+        {"name": "Charlie", "age": 28},
+    ]
+    queryset = QuerySet(SampleModel, data)
+    assert len(queryset._data) == 3
+    assert len(queryset._instances) == 3
+    assert isinstance(queryset._instances[0], SampleModel)
+
+
 def test_queryset_filter():
     data = [
         {"name": "Alice", "age": 25},
@@ -116,3 +128,21 @@ def test_queryset_load_related():
     assert queryset.all()[0].role_obj.role == "Admin"
     assert hasattr(queryset.all()[1], "role_obj")
     assert queryset.all()[1].role_obj.role == "User"
+
+
+def test_queryset_all_calls_load_related():
+    with patch.object(QuerySet, "load_related", return_value=None) as load_related_mock:
+        qs = QuerySet(SampleModel, []).all(load_related=True)
+        load_related_mock.assert_called_once()
+
+def test_queryset_all_returns_instances():
+    data = [
+        {"name": "Alice", "age": 25},
+        {"name": "Bob", "age": 30},
+        {"name": "Charlie", "age": 28},
+    ]
+    queryset = QuerySet(SampleModel, data)
+    res = queryset.all()
+    assert len(res) == 3
+    assert isinstance(res[0], SampleModel)
+
